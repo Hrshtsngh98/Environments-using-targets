@@ -15,15 +15,15 @@
 		422A95332E6234FA007FC71A /* Exceptions for "EnvironmentTest" folder in "Dev" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				"App/HomeView/HomeView-Release.swift",
 				Assets.xcassets,
-				"HomeView-Release.swift",
 			);
 			target = 422A952B2E6234FA007FC71A /* Dev */;
 		};
 		422A95452E6237E8007FC71A /* Exceptions for "EnvironmentTest" folder in "Release" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				"HomeView-Debug.swift",
+				"App/HomeView/HomeView-Debug.swift",
 			);
 			target = 423674412E62191700660BA5 /* Release */;
 		};

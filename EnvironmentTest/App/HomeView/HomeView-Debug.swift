@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @State var showDebugSheet = false
+    @EnvironmentObject var appDependencies: AppDependencies
     
     var body: some View {
         ZStack(alignment: .bottomTrailing) {

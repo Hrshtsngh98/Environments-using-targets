@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HomeView: View {
+    @EnvironmentObject var appDependencies: AppDependencies
+    
     var body: some View {
         contentView
     }
