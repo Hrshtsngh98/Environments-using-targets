@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct User: Codable {
+struct User: Codable, Equatable {
     let gender: String
      let name: Name
      let location: Location
@@ -20,4 +20,10 @@ struct User: Codable {
      let id: UserID
      let picture: Picture
      let nat: String
+    
+    static let example: User = .init(gender: "M", name: .example, location: .example, email: "alan@example.com", login: .example, dob: .example, registered: .example, phone: "312-666-8888", cell: "312-777-9999", id: .example, picture: .example, nat: "something")
+    
+    static func == (lhs: User, rhs: User) -> Bool {
+        lhs.id.name == rhs.id.name
+    }
 }

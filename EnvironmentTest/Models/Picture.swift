@@ -11,4 +11,6 @@ struct Picture: Codable {
     let large: String
     let medium: String
     let thumbnail: String
+    
+    static let example: Picture = .init(large: "Wall", medium: "Wall", thumbnail: "Wall")
 }

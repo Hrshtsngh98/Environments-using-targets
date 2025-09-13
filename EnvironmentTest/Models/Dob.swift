@@ -10,4 +10,6 @@ import Foundation
 struct Dob: Codable {
     let date: String
     let age: Int
+    
+    static let example = Dob(date: "1993", age: 32)
 }

@@ -10,4 +10,6 @@ import Foundation
 struct Timezone: Codable {
     let offset: String
     let description: String
+    
+    static let example = Timezone(offset: "-5", description: "CDT")
 }

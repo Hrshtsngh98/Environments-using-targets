@@ -11,4 +11,10 @@ struct Name: Codable {
     let title: String
     let first: String
     let last: String
+    
+    var fullName: String {
+        title + " " + first + " " + last
+    }
+    
+    static let example = Name(title: "Mr.", first:  "Alan", last: "Brooke")
 }

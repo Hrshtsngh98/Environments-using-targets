@@ -10,4 +10,6 @@ import Foundation
 struct UserID: Codable {
     let name: String
     let value: String? // Value can sometimes be null, so it's safer as an optional.
+    
+    static let example: UserID = .init(name: "Alan", value: "21351325")
 }

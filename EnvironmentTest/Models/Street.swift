@@ -10,4 +10,6 @@ import Foundation
 struct Street: Codable {
     let number: Int
     let name: String
+    
+    static let example = Street(number: 123, name: "Main St.")
 }

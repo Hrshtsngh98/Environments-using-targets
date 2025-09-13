@@ -52,5 +52,19 @@ struct Location: Codable {
         try container.encode(coordinates, forKey: .coordinates)
         try container.encode(timezone, forKey: .timezone)
     }
+    
+    static let example = Location(street: .example, city: "Chicago", state: "IL", country: "USA", postcode: 60616, coordinates: .example, timezone: .example)
+
 }
 
+extension Location {
+    init(street: Street, city: String, state: String, country: String, postcode: Int, coordinates: Coordinates, timezone: Timezone) {
+        self.street = street
+        self.city = city
+        self.state = state
+        self.country = country
+        self.postcode = postcode
+        self.coordinates = coordinates
+        self.timezone = timezone
+    }
+}
