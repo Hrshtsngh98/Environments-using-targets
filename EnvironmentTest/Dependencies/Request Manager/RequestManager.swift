@@ -7,24 +7,11 @@
 
 import Foundation
 
-protocol SessionInjectable {
-    var baseURL: URL { get }
-    var sessionInjectable: [String: String]? { get }
-}
-
-public protocol RequestBuildable {
-    var path: String { get }
-    var method: HTTPMethod { get }
-    var queryParameters: [String: String]? { get }
-    var headers: [String: String]? { get }
-    var timeout: Double? { get }
-}
-
 public enum HTTPMethod: String {
     case GET, POST, DELETE, PUT
 }
 
-class RequestManager {
+class RequestManager: RequestManaging {
     struct Configuration {
         var timeout: TimeInterval = 30
         var cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy
@@ -39,7 +26,7 @@ class RequestManager {
     }
     
     @discardableResult
-    func makeRequest(requestBuildable: RequestBuildable, completion: @escaping (Data?, URLResponse?, (any Error)?) -> Void) -> URLSessionDataTask {
+    func makeRequest(requestBuildable: RequestBuildable, completion: @escaping (Data?, URLResponse?, (any Error)?) -> Void) -> URLSessionDataTask? {
         
         let request = buildRequest(path: requestBuildable.path,
                                    method: requestBuildable.method,
@@ -50,6 +37,10 @@ class RequestManager {
         let task = URLSession.shared.dataTask(with: request, completionHandler: completion)
         task.resume()
         return task
+    }
+    
+    func makeRequest(requestBuildable: any RequestBuildable) async throws -> (Data, URLResponse) {
+        try await makeRequest(requestBuildable: requestBuildable, delegate: nil)
     }
     
     func makeRequest(requestBuildable: RequestBuildable, delegate: URLSessionTaskDelegate? = nil) async throws -> (Data, URLResponse) {

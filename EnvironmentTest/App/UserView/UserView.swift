@@ -7,36 +7,53 @@
 
 import SwiftUI
 
+// EnvironmentKey for passsing objects using .environment
+// Use @Entry
+// extension EnvironmentValues
+
 struct UserView: View {
-    @EnvironmentObject private var appDependencies: AppDependencies
-    @ObservedObject private var viewModel: UserView.ViewModel = .init()
+    @EnvironmentObject private var coordinator: AppCoordinator
+    @ObservedObject var viewModel: UserView.ViewModel
     
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
-                Text(viewModel.appDependencies.sessionName)
+                Text(viewModel.appDependencies.sessionType.rawValue)
                 
-                Text(viewModel.data)
+                if viewModel.data.isEmpty {
+                    Text("Placeholder user name")
+                        .redacted(reason: .placeholder)
+                } else {
+                    Text(viewModel.data)
+                }
+                
+                
+                Button("Go to user Details") {
+                    if let user = viewModel.user {
+                        coordinator.path.append(AppScreen.UserDetailView(user: user))
+                    } else {
+                        print("no user data")
+                    }
+                }
                 
                 Button("Refresh data") {
                     fetchData()
                 }
             }
-            .navigationTitle("User View")
+            .navigationTitle("User Main View")
             .toolbarRole(.editor)
         }
-        .onAppear {
-            viewModel.appDependencies = appDependencies
+        .task {
             fetchData()
         }
     }
     
     private func fetchData() {
-        //Task { await viewModel.fetchData() }
-        viewModel.fetchData2()
+        Task { await viewModel.fetchData() }
+//        viewModel.fetchData2()
     }
 }
 
 #Preview {
-    UserView()
+    UserView(viewModel: .init(appDependencies: .dummySession))
 }

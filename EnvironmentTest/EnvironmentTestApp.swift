@@ -12,7 +12,7 @@ struct EnvironmentTestApp: App {
     var body: some Scene {
         WindowGroup {
             HomeView()
-                .environmentObject(AppDependencies())
+                .environmentObject(AppCoordinator(appDependencies: AppDependencies()))
         }
     }
 }

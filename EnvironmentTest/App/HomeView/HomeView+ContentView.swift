@@ -9,20 +9,20 @@ import SwiftUI
 
 extension HomeView {
     var contentView: some View {
-        NavigationStack {
+        NavigationStack(path: $coordinator.path) {
             VStack(spacing: 24) {
                 Text("Common View")
                 
-                NavigationLink {
-                    UserView()
-                        .environmentObject(appDependencies)
-                } label: {
-                    Text("Go to User View")
+                Button("Go to User View") {
+                    coordinator.path.append(AppScreen.UserView)
                 }
-                
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding()
+            .navigationDestination(for: AppScreen.self) { screen in
+                coordinator.create(screen: screen)
+            }
         }
+        .environmentObject(coordinator)
     }
 }

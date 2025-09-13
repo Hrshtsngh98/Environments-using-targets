@@ -7,6 +7,11 @@
 
 import Foundation
 
+protocol SessionInjectable {
+    var baseURL: URL { get }
+    var sessionInjectable: [String: String]? { get }
+}
+
 class SessionManager: SessionInjectable {
     var baseURL: URL
     

@@ -10,21 +10,29 @@ import SwiftUI
 extension UserView {
     
     class ViewModel: ObservableObject {
-        @Published var appDependencies: AppDependencies = .dummySession
+        @Published var appDependencies: AppDependencies
         @Published var data: String = ""
+        @Published var user: User?
         
-        var requestManager: RequestManager { appDependencies.requestManager }
+        var requestManager: RequestManaging { appDependencies.requestManager }
+        
+        init(appDependencies: AppDependencies) {
+            self.appDependencies = appDependencies
+        }
         
         @MainActor
         func fetchData() async {
             let request = UserRequest()
             do {
+                data = ""
                 let response = try await requestManager.makeRequest(requestBuildable: request)
                 let jsonData = try JSONSerialization.jsonObject(with: response.0)
                 if JSONSerialization.isValidJSONObject(jsonData) {
                     let parsedData = try JSONDecoder().decode(UserResponse.self, from: response.0)
-                    let user = parsedData.results.first!
-                    let newData = user.name.first + " " + user.name.last
+                    let parsedUser = parsedData.results.first!
+                    user = parsedUser
+                    
+                    let newData = parsedUser.name.first + " " + parsedUser.name.last
                     data = newData
                 } else {
                     data = "Data parsing error."
@@ -37,7 +45,7 @@ extension UserView {
         
         func fetchData2() {
             let request = UserRequest()
-            
+            self.data = ""
             requestManager.makeRequest(requestBuildable: request) { data, _, _ in
                 do {
                     guard let data else {
@@ -53,6 +61,7 @@ extension UserView {
                         let user = parsedData.results.first!
                         let newData = user.name.first + " " + user.name.last
                         Task { @MainActor in
+                            self.user = user
                             self.data = newData
                         }
                     } else {
