@@ -393,6 +393,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_CFLAGS = DEBUG;
 				PRODUCT_BUNDLE_IDENTIFIER = HWS.EnvironmentTest.Prod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
